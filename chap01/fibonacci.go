@@ -51,27 +51,31 @@ func fib5(n int) int {
 func main() {
 	n := 40
 
-	fmt.Printf("***** Fibonacci      : %d *****\n\n", n)
+	fmt.Printf("***** Fibonacci            : %d *****\n\n", n)
 
-	fmt.Print("Simple Fibonacci     : ")
+	fmt.Print("Simple Fibonacci           : ")
 	start := time.Now()
 	fmt.Println(fib2(n))
 	elapsed := time.Since(start)
-	fmt.Printf("Simple Fibonacci took: %s\n\n", elapsed)
+	fmt.Printf("Simple Fibonacci took      : %s\n\n", elapsed)
 
-	fmt.Print("Memoization          : ")
+	fmt.Print("Memoization                : ")
 	start = time.Now()
 	init_memo()
 	fmt.Println(fib3(n))
 	elapsed = time.Since(start)
-	fmt.Printf("Simple Fibonacci took: %s\n\n", elapsed)
+	fmt.Printf("Memoization took           : %s\n\n", elapsed)
 
-	fmt.Print("Simple for loop      : ")
+	fmt.Print("Memoization decorator      : ")
+	fmt.Println("None")
+	fmt.Printf("Memoization decorator took : %s\n\n", "None")
+
+	fmt.Print("Simple for loop            : ")
 	start = time.Now()
 	init_memo()
 	fmt.Println(fib5(n))
 	elapsed = time.Since(start)
-	fmt.Printf("Simple for loop took : %s\n\n", elapsed)
+	fmt.Printf("Simple for loop took       : %s\n\n", elapsed)
 
 	// ***** Fibonacci      : 40 *****
 
@@ -79,7 +83,7 @@ func main() {
 	// Simple Fibonacci took: 425.983958ms
 
 	// Memoization          : 102334155
-	// Simple Fibonacci took: 75.5µs
+	// Memoization took     : 75.5µs
 
 	// Simple for loop      : 102334155
 	// Simple for loop took : 875ns
