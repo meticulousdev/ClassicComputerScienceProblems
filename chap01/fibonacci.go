@@ -48,6 +48,27 @@ func fib5(n int) int {
 	return v_next
 }
 
+// (6) Generator and Fibonacci
+// fib6
+func Fibonacci_Generator() func() int {
+	v_last := 0
+	v_next := 1
+	cnt := 0
+
+	return func() int {
+		if cnt == 0 {
+			cnt++
+			return 0
+		} else if cnt == 1 {
+			cnt++
+			return 1
+		} else {
+			v_last, v_next = v_next, v_last+v_next
+		}
+		return v_next
+	}
+}
+
 func main() {
 	n := 40
 
@@ -72,19 +93,33 @@ func main() {
 
 	fmt.Print("Simple for loop            : ")
 	start = time.Now()
-	init_memo()
 	fmt.Println(fib5(n))
 	elapsed = time.Since(start)
 	fmt.Printf("Simple for loop took       : %s\n\n", elapsed)
 
-	// ***** Fibonacci      : 40 *****
+	fmt.Print("Generator and Fibonacci     : ")
+	start = time.Now()
+	fib6 := Fibonacci_Generator()
+	for i := 0; i <= n; i++ {
+		fmt.Println(fib6())
+	}
+	elapsed = time.Since(start)
+	fmt.Printf("Generator and Fibonacci    : %s\n\n", elapsed)
 
-	// Simple Fibonacci     : 102334155
-	// Simple Fibonacci took: 425.983958ms
+	// ***** Fibonacci            : 40 *****
 
-	// Memoization          : 102334155
-	// Memoization took     : 75.5µs
+	// Simple Fibonacci           : 102334155
+	// Simple Fibonacci took      : 422.915709ms
 
-	// Simple for loop      : 102334155
-	// Simple for loop took : 875ns
+	// Memoization                : 102334155
+	// Memoization took           : 98.625µs
+
+	// Memoization decorator      : None
+	// Memoization decorator took : None
+
+	// Simple for loop            : 102334155
+	// Simple for loop took       : 917ns
+
+	// Generator and Fibonacci    : 0 ... 102334155
+	// Generator and Fibonacci    : 36.125µs
 }
