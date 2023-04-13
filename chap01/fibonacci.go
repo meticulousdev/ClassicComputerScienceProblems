@@ -106,6 +106,10 @@ func main() {
 	elapsed = time.Since(start)
 	fmt.Printf("Generator and Fibonacci    : %s\n\n", elapsed)
 
+	// go fmt .\fibonacci.go
+	// go build .\fibonacci.go
+	// .\fibonacci.exe
+	//
 	// ***** Fibonacci            : 40 *****
 
 	// Simple Fibonacci           : 102334155
