@@ -23,7 +23,7 @@ func calculate_py(n_term int) float64 {
 func main() {
 	start := time.Now()
 	fmt.Print("PI                  : ")
-	fmt.Println(calculate_py(1000000))
+	fmt.Println(calculate_py(100000000))
 	elapsed := time.Since(start)
 	fmt.Printf("PI calculation took : %s\n\n", elapsed)
 }
