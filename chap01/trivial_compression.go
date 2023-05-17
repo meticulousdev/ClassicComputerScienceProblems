@@ -2,13 +2,17 @@ package main
 
 import (
 	"fmt"
+	"math/bits"
 	"strings"
+	"unsafe"
 )
 
-func compression(gene []string) uint {
-	var bit_string uint = 0b01
+func compression(gene string) uint64 {
+	var bit_string uint64 = 0b01
 
-	for _, nucleotide := range gene {
+	for i := 0; i < len(gene); i++ {
+		// fmt.Println(bit_string)
+		var nucleotide = string(gene[i])
 		bit_string <<= 2
 		if strings.Compare(nucleotide, "A") == 0 {
 			bit_string |= 0b00
@@ -19,30 +23,69 @@ func compression(gene []string) uint {
 		} else if strings.Compare(nucleotide, "T") == 0 {
 			bit_string |= 0b11
 		} else {
-			fmt.Printf("Invalid nucleotide:%s", nucleotide)
+			fmt.Printf("Invalid nucleotide: %s", nucleotide)
 		}
 	}
 
 	return bit_string
 }
 
-// func decompress(bit_string uint) []string {
-// 	gene := []string{}
-// 	for i := 0; i < bits.Len(bit_string); i++ {
+func decompress(bit_string uint64) string {
+	gene := ""
+	cnt := 0
+	for i := 0; i < bits.Len64(bit_string)-1; i = i + 2 {
+		var bits = (bit_string >> i) & 0b11
+		if bits == 0b00 {
+			gene += "A"
+		} else if bits == 0b01 {
+			gene += "C"
+		} else if bits == 0b10 {
+			gene += "G"
+		} else if bits == 0b11 {
+			gene += "T"
+		} else {
+			fmt.Printf("Invalid bits: %b", bits)
+		}
+		cnt++
+	}
 
-// 	}
-// }
+	gene = reverse_string(gene)
+	return gene
+}
+
+func reverse_string(s string) string {
+	r := []rune(s)
+	for i, j := 0, len(r)-1; i < len(r)/2; i, j = i+1, j-1 {
+		r[i], r[j] = r[j], r[i]
+	}
+	return string(r)
+}
 
 func main() {
-	const LENGTH int = 10
-	gene := []string{"A", "G", "C", "T"}
-	original := [LENGTH]string{}
-	for i := 0; i < LENGTH; i++ {
-		original[i] = gene[i%4]
-	}
-	fmt.Printf("%s", original)
-	fmt.Println()
+	gene := "AGCT"
+	original := ""
 
-	var bit_string = compression(gene)
-	fmt.Printf("%b \n", bit_string)
+	const LENGTH int = 40
+
+	for i := 0; i < LENGTH; i++ {
+		original += string(gene[i%4])
+	}
+
+	fmt.Printf("ORIGINAL        : %s\n", original)
+	fmt.Printf("ORIGINAL SIZE   : %d BYTE\n\n", unsafe.Sizeof(original))
+
+	bit_string := compression(original)
+	fmt.Printf("COMPRESSED      : %d\n", bit_string)
+	fmt.Printf("COMPRESSED SIZE : %d BYTE\n\n", unsafe.Sizeof(bit_string))
+
+	gene_ret := decompress(bit_string)
+	fmt.Printf("DECOMPRESSED    : %s\n", gene_ret)
 }
+
+// ORIGINAL        : AGCTAGCTAGCTAGCTAGCTAGCTAGCTAG
+// ORIGINAL SIZE   : 16 BYTE
+
+// COMPRESSED      : 1329250675899658866
+// COMPRESSED SIZE : 8 BYTE
+
+// DECOMPRESSED    : AGCTAGCTAGCTAGCTAGCTAGCTAGCTAG
