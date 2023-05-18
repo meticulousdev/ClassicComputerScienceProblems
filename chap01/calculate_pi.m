@@ -1,7 +1,3 @@
-tic
-fprintf("%2.60f \n", calculate_pi(1e7))
-toc
-
 function v_pi = calculate_pi(n_term)
     numerator = 4.0;
     denominator = 1.0;
