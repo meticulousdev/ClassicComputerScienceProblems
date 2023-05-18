@@ -81,6 +81,10 @@ func main() {
 	fmt.Printf("DECOMPRESSED    : %s\n", gene_ret)
 }
 
+// go fmt .\trivial_compression.go
+// go build .\trivial_compression.go
+// .\trivial_compression.exe
+
 // ORIGINAL        : AGCTAGCTAGCTAGCTAGCTAGCTAGCTAG
 // ORIGINAL SIZE   : 16 BYTE
 
