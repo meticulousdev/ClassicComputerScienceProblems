@@ -15,11 +15,11 @@ type ArrayStack struct {
 
 type Stack ArrayStack
 
-func stack_init(pstack *Stack) {
+func init_stack(pstack *Stack) {
 	pstack.topIndex = -1
 }
 
-func stack_is_empty(pstack *Stack) bool {
+func is_empty(pstack *Stack) bool {
 	if pstack.topIndex == -1 {
 		return true
 	} else {
@@ -27,13 +27,13 @@ func stack_is_empty(pstack *Stack) bool {
 	}
 }
 
-func stack_push(pstack *Stack, data Data) {
+func push(pstack *Stack, data Data) {
 	pstack.topIndex += 1
 	pstack.stackArr[pstack.topIndex] = data
 }
 
-func stack_pop(pstack *Stack) Data {
-	if stack_is_empty(pstack) {
+func pop(pstack *Stack) Data {
+	if is_empty(pstack) {
 		fmt.Println("Stack Memory Error!")
 		return -1
 	}
@@ -44,8 +44,8 @@ func stack_pop(pstack *Stack) Data {
 	return pstack.stackArr[rIdx]
 }
 
-func stack_peek(pstack *Stack) Data {
-	if stack_is_empty(pstack) {
+func peek(pstack *Stack) Data {
+	if is_empty(pstack) {
 		fmt.Println("Stack Memory Error!")
 		return -1
 	}
@@ -58,26 +58,26 @@ func main() {
 	fmt.Printf("data type      : %T\n\n", data)
 
 	var stack Stack
-	stack_init(&stack)
-	fmt.Printf("stack_init     : %d\n", stack.topIndex)
-	fmt.Printf("stack_is_empty : %t\n\n", stack_is_empty(&stack))
+	init_stack(&stack)
+	fmt.Printf("init     : %d\n", stack.topIndex)
+	fmt.Printf("is_empty : %t\n\n", is_empty(&stack))
 
-	stack_push(&stack, 1)
-	stack_push(&stack, 2)
-	stack_push(&stack, 3)
-	stack_push(&stack, 4)
-	stack_push(&stack, 5)
-	fmt.Printf("stack_is_empty : %t\n\n", stack_is_empty(&stack))
+	push(&stack, 1)
+	push(&stack, 2)
+	push(&stack, 3)
+	push(&stack, 4)
+	push(&stack, 5)
+	fmt.Printf("is_empty : %t\n\n", is_empty(&stack))
 
-	fmt.Printf("stack_peek     : %d\n\n", stack_peek(&stack))
+	fmt.Printf("peek     : %d\n\n", peek(&stack))
 
-	fmt.Print("stack_pop      : ")
-	for stack_is_empty(&stack) != true {
-		fmt.Printf("%d ", stack_pop(&stack))
+	fmt.Print("pop      : ")
+	for is_empty(&stack) != true {
+		fmt.Printf("%d ", pop(&stack))
 	}
 	fmt.Println()
 
-	fmt.Printf("stack_is_empty : %t\n\n", stack_is_empty(&stack))
+	fmt.Printf("is_empty : %t\n\n", is_empty(&stack))
 }
 
 // data type      : main.Data
