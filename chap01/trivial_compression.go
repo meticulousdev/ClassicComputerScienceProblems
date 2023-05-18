@@ -11,7 +11,6 @@ func compression(gene string) uint64 {
 	var bit_string uint64 = 0b01
 
 	for i := 0; i < len(gene); i++ {
-		// fmt.Println(bit_string)
 		var nucleotide = string(gene[i])
 		bit_string <<= 2
 		if strings.Compare(nucleotide, "A") == 0 {
